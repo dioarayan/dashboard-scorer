@@ -2,7 +2,7 @@
   <div>
     <TeamName v-model="teamName" />
     <div>
-      <h2 class="text-center bg-brand text-white text-xxs">{{ count }} </h2>
+      <h2 class="text-center bg-brand text-white text-xxs score-output">{{ count }} </h2>
     </div>
     <div>
       <button @click="counterPlus">+1</button>
