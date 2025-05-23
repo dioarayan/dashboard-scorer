@@ -3,6 +3,7 @@
     <TeamName v-model="teamName" />
     <div>
       <h2 class="text-center bg-brand text-white text-xxs score-output">{{ count }} </h2>
+      <ShotClock />
     </div>
     <div>
       <button @click="counterPlus">+1</button>
@@ -16,6 +17,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import TeamName from './TeamName.vue';
+import ShotClock from './ShotClock.vue';
 
 const teamName = ref("Home")
 const count = ref(0)

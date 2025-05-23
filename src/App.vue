@@ -1,6 +1,7 @@
 <script setup>
 import ClockTimer from './components/ClockTimer.vue';
 import Counter from './components/Counter.vue'
+import ShotClock from './components/ShotClock.vue';
 </script>
 
 <template>
