@@ -3,26 +3,34 @@
     <h5 class="shotClockTimer">{{ formattedTime }}</h5>
   </div>
   <div class="space-x-2">
-      <button class="startShotClock" @click="startShotClockTimer">Start</button>
-      <button class="pauseShotClock" @click="pauseTimer">Pause</button>
       <button class="resetShotClock"@click="resetTimer">Reset</button>
       <button class="restartShotClock" @click="resetAndStartTimer">Restart</button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 
-const seconds = ref(23)
-const milliseconds = ref(59)
+const props = defineProps(['timerStarts', 'timerReset'])
+const seconds = ref(24)
+const milliseconds = ref(9)
 
 let shotInterval:ReturnType<typeof setInterval> | undefined
-let shotInterval1:ReturnType<typeof setInterval> | undefined
 
 const formattedTime = computed(() => {
   const ss = seconds.value.toString().padStart(2, '0')
   const ms = milliseconds.value.toString().padStart(2, '0')
   return `${ss}:${ms}`
+})
+
+onUpdated(() => {
+  if(props.timerStarts == true && props.timerReset == false) {
+    startShotClockTimer()
+  } else if(props.timerStarts == false && props.timerReset == false) {
+    pauseTimer()
+  } else if(props.timerStarts == false && props.timerReset == true) {
+    resetTimer()
+  }
 })
 
 function startShotClockTimer() {
@@ -34,28 +42,26 @@ function startShotClockTimer() {
     } else {
       if (seconds.value > 0) {
         seconds.value--;
-        milliseconds.value = 59;
+        milliseconds.value = 9;
       } else {
         clearInterval(shotInterval);
         shotInterval = undefined;
-        alert('Shot clock expired!');
+        resetTimer()
       }
     }
-  }, 16.66666666666666667);
+  }, 100);
 }
 
 
 function pauseTimer() {
   clearInterval(shotInterval)
-  clearInterval(shotInterval1)
   shotInterval = undefined
-  shotInterval1 = undefined
 }
 
 function resetTimer() {
   pauseTimer()
-  seconds.value = 23
-  milliseconds.value = 59
+  seconds.value = 24
+  milliseconds.value = 9
 }
 
 function resetAndStartTimer() {
