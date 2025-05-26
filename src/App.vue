@@ -8,6 +8,7 @@ import ShotClock from './components/ShotClock.vue';
   <main class="max-w-full m-auto p-5 font-sans">
     <div class="flex justify-center">
       <ClockTimer />
+
       <Counter team-name="Home" />
       <Counter team-name="Visitor" />
     </div>
