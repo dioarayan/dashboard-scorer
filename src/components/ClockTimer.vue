@@ -1,6 +1,16 @@
 <template>
   <div class="text-center">
-    <h1 class="text-4xl mb-4 timer">{{ formattedTime }}</h1>
+    <div v-if="isEditing">
+      <input
+        v-model="formattedTime"
+        @blur="saveClock"
+        @keyup.enter="saveClock"
+        class="text-center timerInput"
+      />
+    </div>
+    <h1 v-else class="text-4xl mb-4 timer" @click="startEditing">
+      {{ formattedTime }}
+    </h1>
     <ShotClock :timerStarts="timerStarts" :timerReset="timerReset" />
 
     <div class="space-x-2">
@@ -15,17 +25,31 @@
 import { ref, computed } from 'vue'
 import ShotClock from './ShotClock.vue'
 
-const minutes = ref(10) // starting at 10:00 minutes
-const seconds = ref(0)
+const minutes =  ref<number>(10) // starting at 10:00 minutes
+const seconds = ref<number>(0)
 const timerStarts = ref(false)
 const timerReset = ref(false)
+const isEditing = ref(false)
 
 let timerInterval: ReturnType<typeof setInterval> | undefined
 
-const formattedTime = computed(() => {
-  const mm = minutes.value.toString().padStart(2, '0')
-  const ss = seconds.value.toString().padStart(2, '0')
-  return `${mm}:${ss}`
+const formattedTime = computed({
+  get() {
+    const mm = minutes.value.toString().padStart(2, '0')
+    const ss = seconds.value.toString().padStart(2, '0')
+    return `${mm}:${ss}`
+  },
+  set(val: string) {
+    const parts = val.split(':')
+    if (parts.length === 2) {
+      const mm = parseInt(parts[0])
+      const ss = parseInt(parts[1])
+      if (!isNaN(mm) && !isNaN(ss)) {
+        minutes.value = mm
+        seconds.value = ss
+      }
+    }
+  }
 })
 
 function startTimer() {
@@ -61,5 +85,14 @@ function resetTimer() {
   timerReset.value = true
   minutes.value = 10
   seconds.value = 0
+}
+
+function startEditing() {
+  isEditing.value = true
+}
+
+function saveClock() {
+  isEditing.value = false
+  formattedTime.value //update
 }
 </script>

@@ -49,4 +49,31 @@ describe('when visiting the page', () => {
       cy.get('.score-output').contains(0)
     })
   })
+
+  describe('when editing the team name', () => {
+    beforeEach(() => {
+      cy.get('h3').first().should('exist').click()
+      cy.get('input.text-center').as('inputVisible')
+      cy.get('@inputVisible').should('be.visible')
+    })
+
+    it('updates the team name', () => {
+      cy.get('@inputVisible').clear().type('Sample Team').blur()
+      cy.contains('Sample Team')
+    })
+  })
+
+  describe('when editing the clock timer', () => {
+    beforeEach(() => {
+      cy.get('h1.timer').first().should('exist').click()
+      cy.get('input.timerInput').as('inputVisible')
+      cy.get('@inputVisible').should('be.visible')
+    })
+
+    it.only('updates the clock timer', () => {
+      cy.get('@inputVisible').clear().type('05:30')
+      cy.get('@inputVisible').blur({ force: true })
+      cy.contains('05:30')
+    })
+  })
 })

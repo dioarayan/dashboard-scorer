@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import TeamName from './TeamName.vue';
-import ShotClock from './ShotClock.vue';
 
 const teamName = ref("Home")
 const count = ref(0)
