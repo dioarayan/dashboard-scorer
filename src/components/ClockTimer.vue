@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="flex flex-col justify-center">
     <div v-if="isEditing">
       <input
         v-model="formattedTime"
@@ -8,9 +8,11 @@
         class="text-center timerInput"
       />
     </div>
-    <h1 v-else class="text-4xl mb-4 timer" @click="startEditing">
-      {{ formattedTime }}
-    </h1>
+    <div v-else>
+      <h1 class="text-4xl mb-4 timer" @click="startEditing">
+        {{ formattedTime }}
+      </h1>
+    </div>
     <ShotClock :timerStarts="timerStarts" :timerReset="timerReset" />
 
     <div class="space-x-2">
