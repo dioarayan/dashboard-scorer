@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="px-20">
     <TeamName v-model="teamName" />
     <div>
-      <h2 class="text-center bg-brand text-white text-xxs score-output">{{ count }} </h2>
+      <p class="text-center bg-brand text-white text-[10rem] score-output">
+        {{ count }} 
+      </p>
     </div>
-    <div>
+    <div class="grid grid-cols-2">
       <button @click="counterPlus">+1</button>
       <button @click="addThree">+3</button>
       <button @click="counterMinus">Delete</button>

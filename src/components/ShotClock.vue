@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
     <h5 class="shotClockTimer">{{ formattedTime }}</h5>
   </div>
   <div class="space-x-2">
