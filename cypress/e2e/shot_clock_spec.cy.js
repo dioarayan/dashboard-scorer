@@ -1,7 +1,7 @@
 describe('with shot clock controls', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173')
-    cy.contains('24:09')
+    cy.contains('24:00')
     cy.contains('10:00')
     cy.get('#startTimerBtn').click()
   })
@@ -27,15 +27,6 @@ describe('with shot clock controls', () => {
     cy.wait(3000)
     cy.get('#resetTimerBtn').click()
     cy.get('.timer').contains('10:00')
-    cy.get('.shotClockTimer').contains('24:09')
-  })
-
-  it('restart the shot clock', () => {
-    cy.wait(2000)
-    cy.get('.restartShotClock').click()
-    cy.get('.timer').contains('09:58')
-    cy.get('.shotClockTimer').should('not.have.value', '24:09')
-    cy.wait(5000)
-    cy.get('.shotClockTimer').contains('18')
+    cy.get('.shotClockTimer').contains('24:00')
   })
 })

@@ -65,7 +65,7 @@ describe('when visiting the page', () => {
 
   describe('when editing the clock timer', () => {
     beforeEach(() => {
-      cy.get('h1.timer').first().should('exist').click()
+      cy.get('p.timer').first().should('exist').click()
       cy.get('input.timerInput').as('inputVisible')
       cy.get('@inputVisible').should('be.visible')
     })

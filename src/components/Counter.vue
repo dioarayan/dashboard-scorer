@@ -1,16 +1,16 @@
 <template>
-  <div class="px-20">
+  <div class="flex flex-col items-center">
     <TeamName v-model="teamName" />
     <div>
       <p class="text-center bg-brand text-white text-[10rem] score-output">
         {{ count }} 
       </p>
     </div>
-    <div class="grid grid-cols-2">
-      <button @click="counterPlus">+1</button>
-      <button @click="addThree">+3</button>
-      <button @click="counterMinus">Delete</button>
-      <button @click="clearScore">Clear!</button>
+    <div class="grid grid-cols-[minmax(80px,_2fr)_minmax(80px,_2fr)] grid-row-2">
+      <button class="scoreController" @click="counterPlus">+1</button>
+      <button class="scoreController" @click="addThree">+3</button>
+      <button class="scoreController" @click="counterMinus">Delete</button>
+      <button class="scoreController" @click="clearScore">Clear!</button>
     </div>
   </div>
 </template>
@@ -19,8 +19,11 @@
 import { ref } from 'vue';
 import TeamName from './TeamName.vue';
 
-const teamName = ref("Home")
+const props = defineProps(["team"])
+
+const teamName = ref(props.team)
 const count = ref(0)
+
 
 function counterPlus() {
   count.value += 1

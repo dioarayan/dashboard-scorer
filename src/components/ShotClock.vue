@@ -1,11 +1,7 @@
 <template>
-  <div class="text-center">
-    <h5 class="shotClockTimer">{{ formattedTime }}</h5>
+  <div class="p-4">
+    <p class="shotClockTimer pb-8 text-3xl">{{ formattedTime }}</p>
   </div>
-  <div class="space-x-2">
-      <button class="resetShotClock"@click="resetTimer">Reset</button>
-      <button class="restartShotClock" @click="resetAndStartTimer">Restart</button>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -13,7 +9,7 @@ import { computed, onUpdated, ref } from 'vue';
 
 const props = defineProps(['timerStarts', 'timerReset'])
 const seconds = ref(24)
-const milliseconds = ref(9)
+const milliseconds = ref(0)
 
 let shotInterval:ReturnType<typeof setInterval> | undefined
 
@@ -61,7 +57,7 @@ function pauseTimer() {
 function resetTimer() {
   pauseTimer()
   seconds.value = 24
-  milliseconds.value = 9
+  milliseconds.value = 0
 }
 
 function resetAndStartTimer() {
