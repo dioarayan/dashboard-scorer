@@ -1,15 +1,14 @@
 <script setup>
 import ClockTimer from './components/ClockTimer.vue';
 import Counter from './components/Counter.vue'
-import ShotClock from './components/ShotClock.vue';
 </script>
 
 <template>
-  <main class="max-w-full m-auto p-5 font-sans">
-    <div class="flex justify-center">
-      <Counter team-name="Home" />
-      <ClockTimer />
-      <Counter team-name="Visitor" />
+  <main>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <Counter team="Home" />
+        <ClockTimer />
+        <Counter team="Visitor" />
     </div>
   </main>
 </template>

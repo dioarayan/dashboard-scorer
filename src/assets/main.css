@@ -1,7 +1,16 @@
 @import './base.css';
 @import "tailwindcss";
 
+body {
+  background-color: #272544;
+}
 #app {
   margin: 0 auto;
-  padding: 2rem;
 } 
+
+.scoreController {
+  border: 2px solid;
+  border-radius: 10px;
+  margin: 8px;
+  min-width: 80px
+}

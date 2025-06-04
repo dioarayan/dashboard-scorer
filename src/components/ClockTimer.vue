@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center">
+  <div class="flex flex-col justify-end items-center my-8">
     <div v-if="isEditing">
       <input
         v-model="formattedTime"
@@ -9,16 +9,22 @@
       />
     </div>
     <div v-else>
-      <h1 class="text-4xl mb-4 timer" @click="startEditing">
+      <p class="text-6xl timer" @click="startEditing">
         {{ formattedTime }}
-      </h1>
+      </p>
     </div>
     <ShotClock :timerStarts="timerStarts" :timerReset="timerReset" />
 
-    <div class="space-x-2">
-      <button id="startTimerBtn" @click="startTimer">Start</button>
-      <button id="pauseTimerBtn" @click="pauseTimer">Pause</button>
-      <button id="resetTimerBtn" @click="resetTimer">Reset</button>
+    <div class="flex place-items-end-safex`">
+      <div class="flex flex-row justify-center gap-2">
+        <button class="resetShotClock"@click="resetShotClock">Reset</button>
+      |
+        <button id="startTimerBtn" @click="startTimer">Start</button>
+      |
+        <button id="pauseTimerBtn" @click="pauseTimer">Pause</button>
+      |
+        <button id="resetTimerBtn" @click="resetTimer">Clear  </button>
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +93,10 @@ function resetTimer() {
   timerReset.value = true
   minutes.value = 10
   seconds.value = 0
+}
+
+function resetShotClock() {
+  timerReset.value = true
 }
 
 function startEditing() {
