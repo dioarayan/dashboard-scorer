@@ -70,10 +70,27 @@ describe('when visiting the page', () => {
       cy.get('@inputVisible').should('be.visible')
     })
 
-    it.only('updates the clock timer', () => {
+    it('updates the clock timer', () => {
       cy.get('@inputVisible').clear().type('05:30')
       cy.get('@inputVisible').blur({ force: true })
       cy.contains('05:30')
+    })
+  })
+
+  describe.only('with the quarter count', () => {
+    beforeEach(() => {
+      cy.contains('Quarter')
+      cy.get('.quarter').as('quarterCount')
+      cy.get('@quarterCount').should('have.text', 1)
+    })
+
+    it('manage the quarter count', () => {
+      cy.get('@quarterCount').dblclick()
+      cy.get('@quarterCount').should('have.text', 3)
+      cy.get('@quarterCount').click()
+      cy.get('@quarterCount').should('have.text', 4)
+      cy.get('@quarterCount').click()
+      cy.get('@quarterCount').should('have.text', 1)
     })
   })
 })
