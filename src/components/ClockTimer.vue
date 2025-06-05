@@ -13,7 +13,7 @@
         />
       </div>
       <div v-else>
-        <p class="text-6xl timer" @dblclick="startEditing">
+        <p class="text-6xl timer" @click="startEditing">
           {{ formattedTime }}
         </p>
       </div>
@@ -33,6 +33,21 @@
   </div>
 </template>
 
+<style scoped>
+.timer {
+  text-align: center;
+  font-size: 4rem; /* text-6xl */
+}
+
+.timerInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 4rem; /* text-6xl */
+  text-align: center;
+}
+</style>
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
 import ShotClock from './ShotClock.vue'
