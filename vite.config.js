@@ -11,10 +11,14 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     tailwindcss(),
+    remix()
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  build: {
+    outDir: 'dist/assets',
+  }
 })
