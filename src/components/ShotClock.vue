@@ -6,7 +6,7 @@
         v-model="seconds"
         @blur='saveShotClock'
         @keyup.enter='saveShotClock'
-        class='text-center'
+        class='text-center timerInput'
       />
     </div>
     <div v-else>
@@ -14,6 +14,20 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.shotClockTimer {
+  font-size: 2.5rem; /* text-2xl */
+}
+.timerInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 2.5rem; /* text-2xl */
+  text-align: center;
+}
+</style>
 
 <script setup lang="ts">
 import { nextTick, onUpdated, ref, watch } from 'vue';

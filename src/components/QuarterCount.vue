@@ -1,7 +1,7 @@
 <template>
   <div class='flex flex-col items-center'>
     <p class='text-lg'> Quarter </p>
-    <p class='text-4xl quarter' @click='incrementQuarter()'> {{ count }} </p>
+    <p class='text-4xl cursor-pointer quarter' @click='incrementQuarter()'> {{ count }} </p>
   </div>
 </template>
 
