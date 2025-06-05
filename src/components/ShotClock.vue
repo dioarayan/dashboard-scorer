@@ -1,23 +1,30 @@
 <template>
-  <div class="p-4">
-    <p class="shotClockTimer pb-8 text-3xl">{{ formattedTime }}</p>
+  <div class="text-center">
+    <div v-if='isEditing'>
+      <input
+        ref="inputRef"
+        v-model="seconds"
+        @blur='saveShotClock'
+        @keyup.enter='saveShotClock'
+        class='text-center'
+      />
+    </div>
+    <div v-else>
+      <p class="text-4xl shotClockTimer" @click="startEditing">{{ seconds }}</p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onUpdated, ref } from 'vue';
+import { nextTick, onUpdated, ref, watch } from 'vue';
 
+const emit = defineEmits(['pauseTimer'])
 const props = defineProps(['timerStarts', 'timerReset'])
 const seconds = ref(24)
-const milliseconds = ref(0)
+const isEditing = ref(false)
+const inputRef = ref(null)
 
 let shotInterval:ReturnType<typeof setInterval> | undefined
-
-const formattedTime = computed(() => {
-  const ss = seconds.value.toString().padStart(2, '0')
-  const ms = milliseconds.value.toString().padStart(2, '0')
-  return `${ss}:${ms}`
-})
 
 onUpdated(() => {
   if(props.timerStarts == true && props.timerReset == false) {
@@ -33,21 +40,15 @@ function startShotClockTimer() {
   if (shotInterval) return;
 
   shotInterval = setInterval(() => {
-    if (milliseconds.value > 0) {
-      milliseconds.value--;
+    if (seconds.value > 0) {
+      seconds.value--;
     } else {
-      if (seconds.value > 0) {
-        seconds.value--;
-        milliseconds.value = 9;
-      } else {
-        clearInterval(shotInterval);
-        shotInterval = undefined;
-        resetTimer()
-      }
+      clearInterval(shotInterval);
+      shotInterval = undefined;
+      pauseTimer()
     }
-  }, 100);
+  }, 1000);
 }
-
 
 function pauseTimer() {
   clearInterval(shotInterval)
@@ -57,11 +58,23 @@ function pauseTimer() {
 function resetTimer() {
   pauseTimer()
   seconds.value = 24
-  milliseconds.value = 0
 }
 
-function resetAndStartTimer() {
-  resetTimer()
-  startShotClockTimer()
+function saveShotClock() {
+  isEditing.value = false
+  seconds.value
 }
+
+function startEditing() {
+  isEditing.value = true
+  nextTick(() => {
+    inputRef.value.focus()
+  })
+}
+
+watch(seconds, (newVal) => {
+  if(newVal == 0) {
+    emit('pauseTimer')
+  }
+})
 </script>

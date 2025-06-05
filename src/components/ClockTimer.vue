@@ -1,20 +1,24 @@
 <template>
-  <div class="flex flex-col justify-end items-center my-8">
-    <div v-if="isEditing">
-      <input
-        v-model="formattedTime"
-        @blur="saveClock"
-        @keyup.enter="saveClock"
-        class="text-center timerInput"
-      />
+  <div class="flex flex-col justify-around items-center
+  ">
+    <QuarterCount />
+    <div class='flex flex-col items-center'>
+      <div v-if="isEditing">
+        <input
+          ref="inputRef"
+          v-model="formattedTime"
+          @blur="saveClock"
+          @keyup.enter="saveClock"
+          class="text-center timerInput"
+        />
+      </div>
+      <div v-else>
+        <p class="text-6xl timer" @dblclick="startEditing">
+          {{ formattedTime }}
+        </p>
+      </div>
+      <ShotClock :timerStarts="timerStarts" :timerReset="timerReset" @pause-timer="pauseTimer" />
     </div>
-    <div v-else>
-      <p class="text-6xl timer" @click="startEditing">
-        {{ formattedTime }}
-      </p>
-    </div>
-    <ShotClock :timerStarts="timerStarts" :timerReset="timerReset" />
-
     <div class="flex place-items-end-safex`">
       <div class="flex flex-row justify-center gap-2">
         <button class="resetShotClock"@click="resetShotClock">Reset</button>
@@ -30,14 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import ShotClock from './ShotClock.vue'
+import QuarterCount from './QuarterCount.vue'
 
 const minutes =  ref<number>(10) // starting at 10:00 minutes
 const seconds = ref<number>(0)
 const timerStarts = ref(false)
 const timerReset = ref(false)
 const isEditing = ref(false)
+const inputRef = ref(null);
 
 let timerInterval: ReturnType<typeof setInterval> | undefined
 
@@ -101,6 +107,9 @@ function resetShotClock() {
 
 function startEditing() {
   isEditing.value = true
+  nextTick(() => {
+    inputRef.value?.focus();
+  });
 }
 
 function saveClock() {
